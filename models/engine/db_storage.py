@@ -6,12 +6,12 @@ from os import getenv
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 from sqlalchemy import (create_engine)
-from models.amenity import Amenity
 from models.city import City
 from models.state import State
-from models.place import Place
-from models.review import Review
-from models.user import User
+# from models.amenity import Amenity
+# from models.place import Place
+# from models.review import Review
+# from models.user import User
 
 
 class DBStorage():
@@ -37,17 +37,19 @@ class DBStorage():
         new_dictionary = {}
         query = None
         if cls is None:
-            tables_list = [User, State, City, Amenity, Place, Review]
+            tables_list = [State, City]
             for table in tables_list:
                 query += self.__session.query(table).all()
             for new_object in query:
-                new_dictionary[new_object.to_dict()['__class__'] + '.' +
+                typ_obj = str(cls).split(" ")[1].split(".")[-1][:-2]
+                new_dictionary[typ_obj + '.' +
                                new_object.id] = new_object
         else:
             query = self.__session.query(cls).all()
+            typ_obj = str(cls).split(" ")[1].split(".")[-1][:-2]
             for new_object in query:
-                new_dictionary[new_object.to_dict()['__class__'] + '.' +
-                               new_object.id] = new_object
+                new_dictionary[typ_obj + '.' + new_object.id] = new_object
+        return new_dictionary
 
     def new(self, obj):
         """add obj to session"""
@@ -67,13 +69,14 @@ class DBStorage():
     def reload(self):
         """reload the session"""
         from models.base_model import BaseModel, Base
-        from models.amenity import Amenity
         from models.city import City
         from models.state import State
-        from models.place import Place
-        from models.review import Review
-        from models.user import User
-        Base.metadata.create_all(self.engine)
+        # from models.amenity import Amenity
+        # from models.place import Place
+        # from models.review import Review
+        # from models.user import User
+        Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
-            bind=self.engine, expire_on_commit=False)
+            bind=self.__engine, expire_on_commit=False)
         self.__session = scoped_session(session_factory)
+        # self.save()
