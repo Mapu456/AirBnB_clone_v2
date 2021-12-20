@@ -122,12 +122,11 @@ class HBNBCommand(cmd.Cmd):
         elif split_array[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_split_Array = split_array[1:]
-        new_dict = {}
-        for value in new_split_Array:
+        new_instance = HBNBCommand.classes[split_array[0]]()
+        split_parameters = split_array[1:]
+        for value in split_parameters:
             split = value.split("=")
-            new_dict[split[0]] = split[1]
-        new_instance = HBNBCommand.classes[split_array[0]](**new_dict)
+            new_instance.__dict__[split[0]] = split[1]
         storage.save()
         print(new_instance.id)
         storage.save()
