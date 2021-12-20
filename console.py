@@ -4,10 +4,10 @@ import cmd
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
-from models.user import User
-from models.place import Place
 from models.state import State
 from models.city import City
+from models.user import User
+from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
@@ -131,6 +131,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 new_instance.__dict__[split[0]] = split[1].replace("_", " ")
 
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -215,11 +216,13 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
+            dict = storage.all(HBNBCommand.classes[args])
+            for k, v in dict.items():
+                del v.__dict__['_sa_instance_state']
+                print_list.append(str(v)) # MAPU
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
+                del v.__dict__['_sa_instance_state']
                 print_list.append(str(v))
 
         print(print_list)
