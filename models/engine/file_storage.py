@@ -64,3 +64,4 @@ class FileStorage:
         id = class_id + '.' + obj.__dict__['id']
         if obj is not None:
             del self.__objects[id]
+        self.save()
