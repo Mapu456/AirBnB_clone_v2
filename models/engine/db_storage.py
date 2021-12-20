@@ -48,7 +48,7 @@ class DBStorage():
         self.__session.add(obj)
         self.save()
     def save(self):
-        pass
+         self.__session.commit()
     def delete(self, obj=None):
         pass
     def reload(self):
