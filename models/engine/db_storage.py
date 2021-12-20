@@ -39,22 +39,25 @@ class DBStorage():
                 query += self.__session.query(table).all()
             for new_object in query:
                 new_dictionary[new_object.to_dict()['__class__'] + '.' +
-                                    new_object.id] = new_object
+                               new_object.id] = new_object
         else:
             query = self.__session.query(cls).all()
             for new_object in query:
                 new_dictionary[new_object.to_dict()['__class__'] + '.' +
-                                    new_object.id] = new_object
+                               new_object.id] = new_object
 
     def new(self, obj):
         self.__session.add(obj)
         self.save()
+
     def save(self):
-         self.__session.commit()
+        self.__session.commit()
+
     def delete(self, obj=None):
         if obj is not None:
             self.__session.delete(obj)
         self.save()
+
     def reload(self):
         from models.base_model import BaseModel, Base
         from models.amenity import Amenity
