@@ -3,6 +3,8 @@
 
 from models.base_model import BaseModel, Base
 from os import getenv
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session
 from sqlalchemy import (create_engine)
 from models.amenity import Amenity
 from models.city import City
@@ -54,5 +56,14 @@ class DBStorage():
             self.__session.delete(obj)
         self.save()
     def reload(self):
-        pass
-
+        from models.base_model import BaseModel, Base
+        from models.amenity import Amenity
+        from models.city import City
+        from models.state import State
+        from models.place import Place
+        from models.review import Review
+        from models.user import User
+        Base.metadata.create_all(self.engine)
+        session_factory = sessionmaker(
+            bind=self.engine, expire_on_commit=False)
+        self.__session = scoped_session(session_factory)
