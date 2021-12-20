@@ -16,4 +16,3 @@ class User(BaseModel, Base):
     last_name = Column(String(128), nullable=False)
 
 places = relationship('Place', backref='user')
-reviews = relationship('Review', backref='user')
