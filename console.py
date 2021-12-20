@@ -126,7 +126,11 @@ class HBNBCommand(cmd.Cmd):
         split_parameters = split_array[1:]
         for value in split_parameters:
             split = value.split("=")
-            new_instance.__dict__[split[0]] = split[1]
+            if (split[1][0] == '"'):
+                new_instance.__dict__[split[0]] = split[1][1:-1]
+            else:
+                new_instance.__dict__[split[0]] = split[1]
+
         storage.save()
         print(new_instance.id)
         storage.save()
