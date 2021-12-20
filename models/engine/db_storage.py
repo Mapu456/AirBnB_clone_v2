@@ -45,7 +45,8 @@ class DBStorage():
                                     new_object.id] = new_object
 
     def new(self, obj):
-        pass
+        self.__session.add(obj)
+        self.save()
     def save(self):
         pass
     def delete(self, obj=None):
