@@ -50,6 +50,9 @@ class DBStorage():
     def save(self):
          self.__session.commit()
     def delete(self, obj=None):
-        pass
+        if obj is not None:
+            self.__session.delete(obj)
+        self.save()
     def reload(self):
         pass
+
