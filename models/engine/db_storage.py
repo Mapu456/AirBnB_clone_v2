@@ -15,10 +15,12 @@ from models.user import User
 
 
 class DBStorage():
+    """new engine"""
     __engine = None
     __session = None
 
     def __init__(self):
+        """constructor with atributtes to connect with db"""
         host = getenv('HBNB_MYSQL_HOST')
         user = getenv('HBNB_MYSQL_USER')
         passwd = getenv('HBNB_MYSQL_PWD')
@@ -31,6 +33,7 @@ class DBStorage():
             Base.metadata.drop_all(bind=self.__engine)
 
     def all(self, cls=None):
+        """select all objs"""
         new_dictionary = {}
         query = None
         if cls is None:
@@ -47,18 +50,22 @@ class DBStorage():
                                new_object.id] = new_object
 
     def new(self, obj):
+        """add obj to session"""
         self.__session.add(obj)
         self.save()
 
     def save(self):
+        """save changes in the session"""
         self.__session.commit()
 
     def delete(self, obj=None):
+        """delete objects saved in the session"""
         if obj is not None:
             self.__session.delete(obj)
         self.save()
 
     def reload(self):
+        """reload the session"""
         from models.base_model import BaseModel, Base
         from models.amenity import Amenity
         from models.city import City
