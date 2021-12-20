@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+from os import path
 
 
 class FileStorage:
@@ -64,4 +65,6 @@ class FileStorage:
             class_id = class_id[1:]
             id = class_id + '.' + obj.__dict__['id']
             del self.__objects[id]
-        self.save()
+            self.save()
+        else:
+            pass
