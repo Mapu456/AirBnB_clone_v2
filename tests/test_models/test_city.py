@@ -5,6 +5,7 @@ from models.city import City
 from models.state import State
 from sqlalchemy.exc import OperationalError
 
+
 class test_City(test_basemodel):
     """ unitest for testing City class """
 
