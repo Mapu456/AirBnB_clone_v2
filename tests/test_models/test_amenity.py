@@ -9,7 +9,7 @@ from sqlalchemy.exc import OperationalError
 from os import getenv
 
 
-class test_Amenity(test_basemodel):
+class test_Amenity(unittest.TestCase):
     """ Define tests for Amenity class"""
 
     def __init__(self, *args, **kwargs):
