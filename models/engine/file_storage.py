@@ -22,6 +22,7 @@ class FileStorage:
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
+        del obj.__dict__['_sa_instance_state']
         str_class = str(obj).split("]")[0][1:]
         self.all().update({str_class + '.' + obj.id: obj})
 
