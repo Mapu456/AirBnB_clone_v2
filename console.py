@@ -211,14 +211,14 @@ class HBNBCommand(cmd.Cmd):
         print_list = []
 
         if args:
-            args = args.split(' ')[0]  # remove possible trailing args
+            args = args.split(' ')[0]
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
             dict = storage.all(HBNBCommand.classes[args])
             for k, v in dict.items():
                 del v.__dict__['_sa_instance_state']
-                print_list.append(str(v)) # MAPU
+                print_list.append(str(v))
         else:
             for k, v in storage.all().items():
                 del v.__dict__['_sa_instance_state']
