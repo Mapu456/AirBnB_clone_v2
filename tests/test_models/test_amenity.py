@@ -3,7 +3,6 @@
 import unittest
 import models
 from models.amenity import Amenity
-from models.amenity import Amenity
 from sqlalchemy.exc import OperationalError
 from os import getenv
 
