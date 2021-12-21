@@ -9,7 +9,7 @@ from sqlalchemy import (create_engine)
 from models.city import City
 from models.state import State
 # from models.amenity import Amenity
-# from models.place import Place
+from models.place import Place
 # from models.review import Review
 from models.user import User
 
@@ -37,7 +37,7 @@ class DBStorage():
         new_dictionary = {}
         query = None
         if cls is None:
-            tables_list = [State, City, User]
+            tables_list = [State, City, User, Place]
             for table in tables_list:
                 query += self.__session.query(table).all()
             for new_object in query:
@@ -72,7 +72,7 @@ class DBStorage():
         from models.city import City
         from models.state import State
         # from models.amenity import Amenity
-        # from models.place import Place
+        from models.place import Place
         # from models.review import Review
         from models.user import User
         Base.metadata.create_all(self.__engine)
