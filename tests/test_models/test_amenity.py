@@ -1,43 +1,24 @@
 #!/usr/bin/python3
-""" Tests for amenity class"""
+"""Test Module that contain the test of class amenity"""
+
+
 import unittest
-import models
 from models.amenity import Amenity
-from tests.test_models.test_base_model import test_basemodel
-from models.amenity import Amenity
-from sqlalchemy.exc import OperationalError
-from os import getenv
 
 
-class test_Amenity(test_basemodel):
-    """ Define tests for Amenity class"""
+class TestAmenity(unittest.TestCase):
+    """test class Amenity"""
 
-    def __init__(self, *args, **kwargs):
-        """ Initialisation of Amenity instance"""
-        super().__init__(*args, **kwargs)
-        self.name = "Amenity"
-        self.value = Amenity
-        self.amenity = Amenity(name="wifi")
+    def setUp(self):
+        """create a instance"""
+        self.new_amenity = Amenity()
 
-    def test_creation(self):
-        """ Test Amenity class instance creation"""
-        amenity = self.value(id="001", name="wifi")
-        self.assertEqual(amenity.name, "wifi")
-        self.assertEqual(amenity.id, "001")
+    def tearDown(self):
+        """check the type attributes"""
+        self.new_amenity = None
 
-    @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'db', "not supported")
-    def test_no_name(self):
-        """ Check for mandatory arguments"""
-        new = self.value()
-        with self.assertRaises(OperationalError):
-            try:
-                new.save()
-            except Exception as error:
-                models.storage._DBStorage__session.rollback()
-                raise error
-
-    @unittest.skipIf(getenv('HBNB_TYPE_STORAGE') == 'db', "not supported")
-    def test_amenity_instance(self):
-        """ Check that amenity is an instance of Amenity class"""
-        amenity = self.value()
-        self.assertTrue(isinstance(amenity, Amenity))
+    def test_amenity(self):
+        """check the type attributes"""
+        self.assertIsInstance(self.new_amenity, Amenity)
+        self.assertEqual(type(self.new_amenity.name), str)
+        self.assertEqual(self.new_amenity.name, "")
