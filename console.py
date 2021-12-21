@@ -112,7 +112,6 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        print("hello")
         split_array = args.split(" ")
         """ Create an object of any class"""
         if not args:
@@ -130,7 +129,6 @@ class HBNBCommand(cmd.Cmd):
                     split[0]] = split[1][1:-1].replace("_", " ")
             else:
                 new_instance.__dict__[split[0]] = split[1].replace("_", " ")
-
         storage.new(new_instance)
         storage.save()
         print(new_instance.id)

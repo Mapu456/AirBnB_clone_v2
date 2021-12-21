@@ -54,7 +54,6 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            print("EFE")
             """ getter attribute amenities that returns the list of Amenity
             instances with place_id equals to the current Place.id"""
             from models import storage
@@ -68,7 +67,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, obj):
-            print("GOOD")
             """ setter attribute amenities.id that append on the list of
             Amenity instances """
             from models.amenity import Amenity
