@@ -11,7 +11,6 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
-
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
 
@@ -113,6 +112,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
+        print("hello")
         split_array = args.split(" ")
         """ Create an object of any class"""
         if not args:
@@ -331,7 +331,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
