@@ -33,6 +33,14 @@ class test_dbstorage(unittest.TestCase):
         """ Confirm __objects is a dict """
         self.assertEqual(type(storage.all()), dict)
 
+    def test_store(self):
+        """ Test if an object is store in the database """
+        new = State(name="Antioquia")
+        new.save()
+        _id = new.to_dict()['id']
+        self.assertIn(new.__class__.__name__ + '.' + _id,
+                        storage.all(type(new)).keys())
+
     def test_storage_var_created(self):
         """ FileStorage object storage created """
         from models.engine.db_storage import DBStorage
