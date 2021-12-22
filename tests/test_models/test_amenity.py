@@ -17,7 +17,6 @@ class test_Amenity(unittest.TestCase):
         super().__init__(*args, **kwargs)
         self.name = "Amenity"
         self.value = Amenity
-        self.amenity = Amenity(name="wifi")
 
     def test_creation(self):
         """ Test Amenity class instance creation"""
