@@ -25,6 +25,8 @@ env.hosts = ['35.243.245.64', '18.234.66.163']
 
 
 def do_deploy(archive_path):
+    """Fabric script that generates a .tgz archive from the contents of
+    the web_static folder function do_pack"""
     name_dir = archive_path[9:-4]
     if os.path.exists(archive_path):
         put(archive_path, '/tmp')
