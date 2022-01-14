@@ -4,7 +4,9 @@ the web_static folder function do_pack."""
 
 from fabric.api import *
 from datetime import datetime
-import os
+
+env.hosts = ['35.243.245.64', '18.234.66.163']
+env.user = "ubuntu"
 
 
 def do_pack():
@@ -21,30 +23,24 @@ def do_pack():
         return None
 
 
-env.hosts = ['35.243.245.64', '18.234.66.163']
-env.user = "ubuntu"
-
-
 def do_deploy(archive_path):
+    """Deploy the boxing package tgz file
     """
-    Function that distributes an archive.
-    """
-    name_dir = archive_path[9:-4]
-    if os.path.exists(archive_path):
+    try:
+        archive = archive_path.split('/')[-1]
+        path = '/data/web_static/releases/' + archive.strip('.tgz')
+        current = '/data/web_static/current'
         put(archive_path, '/tmp/')
-        run("sudo mkdir -p /data/web_static/releases/{}/".format(name_dir))
-        run("sudo tar -xzf /tmp/{}.tgz -C \
-        /data/web_static/releases/{}/".format(name_dir, name_dir))
-        run("sudo rm /tmp/{}.tgz".format(name_dir))
-        run("sudo mv /data/web_static/releases/{}/web_static/* \
-            /data/web_static/releases/{}/".
-            format(name_dir, name_dir))
-        run("sudo rm -rf /data/web_static/releases/{}/web_static"
-            .format(name_dir))
-        run("sudo rm -rf /data/web_static/current")
-        run("sudo ln -s /data/web_static/releases/{}/ \
-            /data/web_static/current".format(name_dir))
-        print("New version deployed!")
+
+        run('mkdir -p {}/'.format(path))
+        run('tar -xzf /tmp/{} -C {}'.format(archive, path))
+        run('rm /tmp/{}'.format(archive))
+        run('mv {}/web_static/* {}'.format(path, path))
+        run('rm -rf {}/web_static'.format(path))
+        run('rm -rf {}'.format(current))
+        run('ln -s {} {}'.format(path, current))
+        print('New version deployed!')
         return True
-    else:
+    except Exception as e:
+        print(e)
         return False
